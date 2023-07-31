@@ -47,24 +47,18 @@ it('type safe state methods', () => {
     if (guarantee.isPending())
         guarantee.state satisfies {
             status: 'pending'
-            promise: Promise<0>
+            promise: Promise<number>
         }
 
     if (guarantee.isRejected())
         guarantee.state satisfies {
-            status: 'pending'
-            promise: Promise<0>
+            status: 'rejected'
+            error: Error
         }
 
     if (guarantee.isResolved())
         guarantee.state satisfies {
-            status: 'pending'
-            promise: Promise<0>
-        }
-
-    if (guarantee.isFulfilled())
-        guarantee.state satisfies {
-            status: 'pending'
-            promise: Promise<0>
+            status: 'resolved'
+            value: number
         }
 })

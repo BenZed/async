@@ -1,26 +1,27 @@
 {
     "name": "@benzed/async",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "main": "./lib",
     "description": "Asyncronous and Promise-related tools, classes and helpers",
     "scripts": {
         "update": "npx npm-check -u",
-        "test": "jest --run-in-band --all",
-        "test:dev": "jest --run-in-band --only-changed --verbose",
+        "test": "jest --run-in-band --coverage --all",
+        "test:dev": "jest --run-in-band --only-changed --watch --verbose --coverage",
+        "tsc": "shx rm -rf lib && tsc",
         "lint": "eslint src/**/*.ts --fix",
-        "build": "npm run lint && npm run tsc",
-        "tsc": "shx rm -rf lib && shx mkdir lib && tsc"
+        "build": "npm run test && npm run lint && npm run tsc",
+        "prepublishOnly": "npm run build"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/BenZed/benzed-ts.git"
+        "url": "git+https://github.com/BenZed/async.git"
     },
     "author": "BenZed",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/BenZed/benzed-ts/issues"
+        "url": "https://github.com/BenZed/async/issues"
     },
-    "homepage": "https://github.com/BenZed/benzed-ts#readme",
+    "homepage": "https://github.com/BenZed/async#readme",
     "devDependencies": {
         "@benzed/dev": "^0.15.0",
         "@types/jest": "^29.2.0",
@@ -35,9 +36,10 @@
         "typescript": "^5.1.3"
     },
     "dependencies": {
-        "@benzed/util": "4.0.0",
-        "@benzed/types": "^1.0.1",
+        "@benzed/array": "4.0.2",
+        "@benzed/callable": "^1.0.0",
         "@benzed/each": "^1.0.0",
-        "@benzed/array": "4.0.0"
+        "@benzed/types": "^1.0.1",
+        "@benzed/util": "4.0.0"
     }
 }

@@ -1,4 +1,5 @@
-import { Func, toFalse, toTrue } from '@benzed/util'
+import { toFalse, toTrue } from '@benzed/util'
+import { Func } from '@benzed/types'
 
 import milliseconds from './milliseconds'
 import { isQueuePayload, Queue } from './queue'

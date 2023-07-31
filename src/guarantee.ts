@@ -1,5 +1,5 @@
 import { Async, toAsync } from './types'
-// import { Method } from '@benzed/traits'
+import { Callable } from '@benzed/callable'
 
 //// Types ////
 
@@ -13,7 +13,7 @@ type AsyncState<T> =
 
 export type HasAsyncState<S extends AsyncState<unknown>> = { state: S }
 
-class Guarantee<A extends unknown[], R> extends Method<
+class Guarantee<A extends unknown[], R> extends Callable<
     (...args: A) => Async<R>
 > {
     protected _state: AsyncState<R> = { status: 'idle' }
@@ -62,6 +62,7 @@ class Guarantee<A extends unknown[], R> extends Method<
             }
         })
 
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const guarantee = this
     }
 
@@ -95,7 +96,7 @@ class Guarantee<A extends unknown[], R> extends Method<
 
         const message = this.isRejected()
             ? this.state.error.message
-            : `${this.name || 'guaranteur method'} has not fulfilled.`
+            : `${this.name || 'guarantor method'} has not fulfilled.`
 
         throw new Error(message)
     }
@@ -104,7 +105,7 @@ class Guarantee<A extends unknown[], R> extends Method<
         if (!this.isFulfilled()) {
             throw new Error(
                 `${
-                    this.name || 'guaranteur method'
+                    this.name || 'guarantor method'
                 } cannot be reset until it is fulfilled.`
             )
         }

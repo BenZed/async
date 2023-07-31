@@ -49,4 +49,4 @@ function onAnimationFrame(func: () => unknown): Abort {
 
 //// Exports ////
 
-export { onTimeout, onInterval, onAnimationFrame }
+export { onTimeout, onInterval, onAnimationFrame, Abort }
