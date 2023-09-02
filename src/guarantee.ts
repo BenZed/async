@@ -4,15 +4,21 @@ import { Callable } from '@benzed/callable'
 //// Types ////
 
 type AsyncState<T> =
-    | { status: 'idle' }
-    | { status: 'pending'; promise: Async<T> }
-    | { status: 'resolved'; value: T }
-    | { status: 'rejected'; error: Error }
-
-//// Helper ////
+    /**
+     * {@link Guarantee} has not been called.
+     */
+    | { readonly status: 'idle' }
+    | { readonly status: 'pending'; readonly promise: Async<T> }
+    | { readonly status: 'resolved'; readonly value: T }
+    | { readonly status: 'rejected'; readonly error: Error }
 
 export type HasAsyncState<S extends AsyncState<unknown>> = { state: S }
 
+//// Main ////
+
+/**
+ * A {@link Guarantee} is a {@link Callable} that caches
+ */
 class Guarantee<A extends unknown[], R> extends Callable<
     (...args: A) => Async<R>
 > {
@@ -21,11 +27,11 @@ class Guarantee<A extends unknown[], R> extends Callable<
         return this._state
     }
 
-    constructor(readonly func: (...args: A) => R | Async<R>) {
+    constructor(private readonly _func: (...args: A) => R | Async<R>) {
         super(function (this: unknown, ...args) {
             switch (guarantee.state.status) {
                 case 'idle': {
-                    const promise = toAsync(guarantee.func.apply(this, args))
+                    const promise = toAsync(guarantee._func.apply(this, args))
                         .then(value => {
                             guarantee['_state'] = { status: 'resolved', value }
                             return value
@@ -91,6 +97,11 @@ class Guarantee<A extends unknown[], R> extends Callable<
         return this.isRejected() || this.isResolved()
     }
 
+    /**
+     * Value of the resolved guarantor method.
+     *
+     * @throws if {@link state} is has not been fulfilled
+     */
     get value(): R {
         if (this.isResolved()) return this.state.value
 
@@ -101,6 +112,9 @@ class Guarantee<A extends unknown[], R> extends Callable<
         throw new Error(message)
     }
 
+    /**
+     * Reset the guarantor method to idle
+     */
     reset(): void {
         if (!this.isFulfilled()) {
             throw new Error(
