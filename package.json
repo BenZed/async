@@ -1,6 +1,6 @@
 {
     "name": "@benzed/async",
-    "version": "4.0.1",
+    "version": "5.0.0",
     "main": "./lib",
     "description": "Asyncronous and Promise-related tools, classes and helpers",
     "scripts": {
@@ -37,8 +37,6 @@
     },
     "dependencies": {
         "@benzed/array": "4.0.2",
-        "@benzed/callable": "^1.0.0",
-        "@benzed/each": "^1.0.0",
         "@benzed/types": "^1.0.1",
         "@benzed/util": "4.0.0"
     }

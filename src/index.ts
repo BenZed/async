@@ -1,5 +1,3 @@
-export * from './guarantee'
-
 export * from './milliseconds'
 
 export * from './on-timeout'

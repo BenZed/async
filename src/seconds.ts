@@ -5,7 +5,7 @@ import milliseconds from './milliseconds'
  *
  * @param {type} count Number of seconds to wait.
  */
-const seconds = (count: number): Promise<void> => milliseconds(count * 1000)
+const seconds = (count: number) => milliseconds(count * 1000)
 
 //// Main ////
 
